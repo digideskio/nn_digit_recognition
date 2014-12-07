@@ -1,4 +1,4 @@
 nn_digit_recognition
 ====================
 
-Neural Network Digit Recognitiion with Python
+Neural Network Digit Recognition with Python 3
