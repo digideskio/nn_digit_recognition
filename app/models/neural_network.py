@@ -6,11 +6,12 @@ import random
 from numpy.random.mtrand import randn
 
 from ..math.sigmoid import sigmoid_vec, sigmoid_prime_vec
+from ..math.cost_functions import CrossEntropyCost
 
 
 class NeuralNetwork():
 
-    def __init__(self, sizes):
+    def __init__(self, sizes, cost=CrossEntropyCost):
         self.num_layers = len(sizes)
         self.sizes = sizes
         self.biases = [randn(y, 1) for y in sizes[1:]]
@@ -58,10 +59,12 @@ class NeuralNetwork():
                 """
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
+
         for x, y in mini_batch:
             delta_nabla_b, delta_nabla_w = self.backprop(x, y)
             nabla_b = [nb +dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
             nabla_w = [nw +dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
+
         self.weights = [w -( alpha /len(mini_batch) ) *nw
                         for w, nw in zip(self.weights, nabla_w)]
         self.biases = [b -( alpha /len(mini_batch) ) *nb
@@ -85,11 +88,13 @@ class NeuralNetwork():
             zs.append(z)
             activation = sigmoid_vec(z)
             activations.append(activation)
+
         # backward pass
         delta = self.cost_derivative(activations[-1], y) * \
                 sigmoid_prime_vec(zs[-1])
         nabla_b[-1] = delta
         nabla_w[-1] = np.dot(delta, activations[-2].transpose())
+
         # Note that the variable l in the loop below is used a little
         # differently to the notation in Chapter 2 of the book.  Here,
         # l = 1 means the last layer of neurons, l = 2 is the
@@ -102,6 +107,7 @@ class NeuralNetwork():
             delta = np.dot(self.weights[- l +1].transpose(), delta) * spv
             nabla_b[-l] = delta
             nabla_w[-l] = np.dot(delta, activations[- l -1].transpose())
+
         return nabla_b, nabla_w
 
     def evaluate(self, test_data):
@@ -120,4 +126,4 @@ class NeuralNetwork():
                 Return the vector of partial derivatives \partial C_x /
                 \partial a for the output activations.
                 """
-        return ( output_activations -y)
+        return output_activations - y
