@@ -16,7 +16,7 @@ def start():
         list(training_data),
         epochs=300,
         mini_batch_size=10,
-        alpha=0.3,
+        alpha=3.0,
         evaluation_data=list(test_data),
         monitor_evaluation_accuracy=True
     )

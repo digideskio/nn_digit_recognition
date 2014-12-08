@@ -131,6 +131,7 @@ class NeuralNetwork():
                     "Accuracy on evaluation data: {} / {}"
                     .format(self.accuracy(evaluation_data), n_data)
                 )
+            alpha = alpha * 0.9 # slowly decrease alpha per training iteration
         return (
             evaluation_cost,
             evaluation_accuracy,

@@ -17,6 +17,8 @@ from app.models.neural_network import NeuralNetwork
 from app.math.cost_functions import CrossEntropyCost
 
 # Third-party libraries
+import matplotlib
+matplotlib.rcParams['backend'] = "Qt4Agg"
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -54,6 +56,8 @@ def run_network(filename, num_epochs, training_set_size=1000, lmbda=0.0):
     random.seed(12345678)
     np.random.seed(12345678)
     training_data, validation_data, test_data = mnist_loader.load_data_wrapper()
+    training_data = list(training_data)
+    test_data = list(test_data)
     net = NeuralNetwork([784, 30, 10], cost=CrossEntropyCost())
     net.large_weight_initializer()
     test_cost, test_accuracy, training_cost, training_accuracy \
@@ -79,6 +83,7 @@ def make_plots(filename, num_epochs,
     test_cost, test_accuracy, training_cost, training_accuracy \
         = json.load(f)
     f.close()
+
     plot_training_cost(training_cost, num_epochs, training_cost_xmin)
     plot_test_accuracy(test_accuracy, num_epochs, test_accuracy_xmin)
     plot_test_cost(test_cost, num_epochs, test_cost_xmin)
@@ -155,26 +160,36 @@ def plot_overlay(test_accuracy, training_accuracy, num_epochs, xmin,
     ax.grid(True)
     ax.set_xlim([xmin, num_epochs])
     ax.set_xlabel('Epoch')
-    ax.set_ylim([90, 100])
+    ax.set_ylim([0, 100])
     plt.legend(loc="lower right")
     plt.show()
 
 if __name__ == "__main__":
-    filename = input("Enter a file name: ")
-    num_epochs = int(input(
-        "Enter the number of epochs to run for: "))
-    training_cost_xmin = int(input(
-        "training_cost_xmin (suggest 200): "))
-    test_accuracy_xmin = int(input(
-        "test_accuracy_xmin (suggest 200): "))
-    test_cost_xmin = int(input(
-        "test_cost_xmin (suggest 0): "))
-    training_accuracy_xmin = int(input(
-        "training_accuracy_xmin (suggest 0): "))
-    training_set_size = int(input(
-        "Training set size (suggest 1000): "))
-    lmbda = float(input(
-        "Enter the regularization parameter, lambda (suggest: 5.0): "))
+    if "y" == input("Just run with default values? (y or n)").lower():
+        filename = "results.json"
+        num_epochs = 300
+        training_cost_xmin = 0
+        test_accuracy_xmin = 0
+        test_cost_xmin = 0
+        training_accuracy_xmin = 0
+        training_set_size = 1000
+        lmbda = 5
+    else:
+        filename = input("Enter a file name: ")
+        num_epochs = int(input(
+            "Enter the number of epochs to run for (suggest 300): "))
+        training_cost_xmin = int(input(
+            "training_cost_xmin (suggest 0): "))
+        test_accuracy_xmin = int(input(
+            "test_accuracy_xmin (suggest 0): "))
+        test_cost_xmin = int(input(
+            "test_cost_xmin (suggest 0): "))
+        training_accuracy_xmin = int(input(
+            "training_accuracy_xmin (suggest 0): "))
+        training_set_size = int(input(
+            "Training set size (suggest 1000): "))
+        lmbda = float(input(
+            "Enter the regularization parameter, lambda (suggest: 5.0): "))
     main(filename, num_epochs, training_cost_xmin,
          test_accuracy_xmin, test_cost_xmin, training_accuracy_xmin,
          training_set_size, lmbda)
