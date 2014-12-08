@@ -23,9 +23,9 @@ def start():
 
 def load(filename):
     """
-        Load a neural network from the file ``filename``.  Returns an
-        instance of Network.
-        """
+    Load a neural network from the file ``filename``.  Returns an
+    instance of Network.
+    """
     f = open(filename, "r")
     data = json.load(f)
     f.close()

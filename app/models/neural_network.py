@@ -18,34 +18,34 @@ class NeuralNetwork():
 
     def default_weight_initializer(self):
         """
-                Initialize each weight using a Gaussian distribution with mean 0
-                and standard deviation 1 over the square root of the number of
-                weights connecting to the same neuron. Initialize the biases
-                using a Gaussian distribution with mean 0 and standard
-                deviation 1.
-                Note that the first layer is assumed to be an input layer, and
-                by convention we won't set any biases for those neurons, since
-                biases are only ever used in computing the outputs from later
-                layers.
-                """
+        Initialize each weight using a Gaussian distribution with mean 0
+        and standard deviation 1 over the square root of the number of
+        weights connecting to the same neuron. Initialize the biases
+        using a Gaussian distribution with mean 0 and standard
+        deviation 1.
+        Note that the first layer is assumed to be an input layer, and
+        by convention we won't set any biases for those neurons, since
+        biases are only ever used in computing the outputs from later
+        layers.
+        """
         self.biases = [randn(y, 1) for y in self.sizes[1:]]
         self.weights = [randn(y, x) / np.sqrt(x)
                         for x, y in zip(self.sizes[:-1], self.sizes[1:])]
 
     def large_weight_initializer(self):
         """
-                Initialize the weights using a Gaussian distribution with mean 0
-                and standard deviation 1. Initialize the biases using a
-                Gaussian distribution with mean 0 and standard deviation 1.
-                Note that the first layer is assumed to be an input layer, and
-                by convention we won't set any biases for those neurons, since
-                biases are only ever used in computing the outputs from later
-                layers.
-                This weight and bias initializer uses the same approach as in
-                Chapter 1, and is included for purposes of comparison. It
-                will usually be better to use the default weight initializer
-                instead.
-                """
+        Initialize the weights using a Gaussian distribution with mean 0
+        and standard deviation 1. Initialize the biases using a
+        Gaussian distribution with mean 0 and standard deviation 1.
+        Note that the first layer is assumed to be an input layer, and
+        by convention we won't set any biases for those neurons, since
+        biases are only ever used in computing the outputs from later
+        layers.
+        This weight and bias initializer uses the same approach as in
+        Chapter 1, and is included for purposes of comparison. It
+        will usually be better to use the default weight initializer
+        instead.
+        """
         self.biases = [randn(y, 1) for y in self.sizes[1:]]
         self.weights = [randn(y, x)
                         for x, y in zip(self.sizes[:-1], self.sizes[1:])]
@@ -70,24 +70,24 @@ class NeuralNetwork():
             monitor_training_accuracy=False
     ):
         """
-                Train the neural network using mini-batch stochastic gradient
-                descent. The ``training_data`` is a list of tuples ``(x, y)``
-                representing the training inputs and the desired outputs. The
-                other non-optional parameters are self-explanatory, as is the
-                regularization parameter ``lmbda``. The method also accepts
-                ``evaluation_data``, usually either the validation or test
-                data. We can monitor the cost and accuracy on either the
-                evaluation data or the training data, by setting the
-                appropriate flags. The method returns a tuple containing four
-                lists: the (per-epoch) costs on the evaluation data, the
-                accuracies on the evaluation data, the costs on the training
-                data, and the accuracies on the training data. All values are
-                evaluated at the end of each training epoch. So, for example,
-                if we train for 30 epochs, then the first element of the tuple
-                will be a 30-element list containing the cost on the
-                evaluation data at the end of each epoch. Note that the lists
-                are empty if the corresponding flag is not set.
-                """
+        Train the neural network using mini-batch stochastic gradient
+        descent. The ``training_data`` is a list of tuples ``(x, y)``
+        representing the training inputs and the desired outputs. The
+        other non-optional parameters are self-explanatory, as is the
+        regularization parameter ``lmbda``. The method also accepts
+        ``evaluation_data``, usually either the validation or test
+        data. We can monitor the cost and accuracy on either the
+        evaluation data or the training data, by setting the
+        appropriate flags. The method returns a tuple containing four
+        lists: the (per-epoch) costs on the evaluation data, the
+        accuracies on the evaluation data, the costs on the training
+        data, and the accuracies on the training data. All values are
+        evaluated at the end of each training epoch. So, for example,
+        if we train for 30 epochs, then the first element of the tuple
+        will be a 30-element list containing the cost on the
+        evaluation data at the end of each epoch. Note that the lists
+        are empty if the corresponding flag is not set.
+        """
         n_data = None
         if evaluation_data:
             n_data = len(evaluation_data)
@@ -141,12 +141,12 @@ class NeuralNetwork():
 
     def update_mini_batch(self, mini_batch, alpha, lmbda, n):
         """
-                Update the network's weights and biases by applying gradient
-                descent using backpropagation to a single mini batch. The
-                ``mini_batch`` is a list of tuples ``(x, y)``, ``alpha`` is the
-                learning rate, ``lmbda`` is the regularization parameter, and
-                ``n`` is the total size of the training data set.
-                """
+        Update the network's weights and biases by applying gradient
+        descent using backpropagation to a single mini batch. The
+        ``mini_batch`` is a list of tuples ``(x, y)``, ``alpha`` is the
+        learning rate, ``lmbda`` is the regularization parameter, and
+        ``n`` is the total size of the training data set.
+        """
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
 
@@ -166,11 +166,11 @@ class NeuralNetwork():
 
     def backprop(self, x, y):
         """
-                Return a tuple ``(nabla_b, nabla_w)`` representing the
-                gradient for the cost function C_x.  ``nabla_b`` and
-                ``nabla_w`` are layer-by-layer lists of numpy arrays, similar
-                to ``self.biases`` and ``self.weights``.
-                """
+        Return a tuple ``(nabla_b, nabla_w)`` representing the
+        gradient for the cost function C_x.  ``nabla_b`` and
+        ``nabla_w`` are layer-by-layer lists of numpy arrays, similar
+        to ``self.biases`` and ``self.weights``.
+        """
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
         # feedforward
@@ -206,45 +206,45 @@ class NeuralNetwork():
 
     def evaluate(self, test_data):
         """
-                Return the number of test inputs for which the neural
-                network outputs the correct result. Note that the neural
-                network's output is assumed to be the index of whichever
-                neuron in the final layer has the highest activation.
-                """
+        Return the number of test inputs for which the neural
+        network outputs the correct result. Note that the neural
+        network's output is assumed to be the index of whichever
+        neuron in the final layer has the highest activation.
+        """
         test_results = [(np.argmax(self.feed_forward(x)), y)
                         for (x, y) in test_data]
         return sum(int(x == y) for (x, y) in test_results)
 
     def cost_derivative(self, output_activations, y):
         """
-                Return the vector of partial derivatives \partial C_x /
-                \partial a for the output activations.
-                """
+        Return the vector of partial derivatives \partial C_x /
+        \partial a for the output activations.
+        """
         return output_activations - y
 
     def accuracy(self, data, convert=False):
         """
-                Return the number of inputs in ``data`` for which the neural
-                network outputs the correct result. The neural network's
-                output is assumed to be the index of whichever neuron in the
-                final layer has the highest activation.
+        Return the number of inputs in ``data`` for which the neural
+        network outputs the correct result. The neural network's
+        output is assumed to be the index of whichever neuron in the
+        final layer has the highest activation.
 
-                The flag ``convert`` should be set to False if the data set is
-                validation or test data (the usual case), and to True if the
-                data set is the training data. The need for this flag arises
-                due to differences in the way the results ``y`` are
-                represented in the different data sets.  In particular, it
-                flags whether we need to convert between the different
-                representations.  It may seem strange to use different
-                representations for the different data sets.  Why not use the
-                same representation for all three data sets?  It's done for
-                efficiency reasons -- the program usually evaluates the cost
-                on the training data and the accuracy on other data sets.
-                These are different types of computations, and using different
-                representations speeds things up.  More details on the
-                representations can be found in
-                mnist_loader.load_data_wrapper.
-                """
+        The flag ``convert`` should be set to False if the data set is
+        validation or test data (the usual case), and to True if the
+        data set is the training data. The need for this flag arises
+        due to differences in the way the results ``y`` are
+        represented in the different data sets.  In particular, it
+        flags whether we need to convert between the different
+        representations.  It may seem strange to use different
+        representations for the different data sets.  Why not use the
+        same representation for all three data sets?  It's done for
+        efficiency reasons -- the program usually evaluates the cost
+        on the training data and the accuracy on other data sets.
+        These are different types of computations, and using different
+        representations speeds things up.  More details on the
+        representations can be found in
+        mnist_loader.load_data_wrapper.
+        """
         if convert:
             results = [(np.argmax(self.feed_forward(x)), np.argmax(y))
                        for (x, y) in data]
@@ -255,12 +255,12 @@ class NeuralNetwork():
 
     def total_cost(self, data, lmbda, convert=False):
         """
-                Return the total cost for the data set ``data``.  The flag
-                ``convert`` should be set to False if the data set is the
-                training data (the usual case), and to True if the data set is
-                the validation or test data.  See comments on the similar (but
-                reversed) convention for the ``accuracy`` method, above.
-                """
+        Return the total cost for the data set ``data``.  The flag
+        ``convert`` should be set to False if the data set is the
+        training data (the usual case), and to True if the data set is
+        the validation or test data.  See comments on the similar (but
+        reversed) convention for the ``accuracy`` method, above.
+        """
         cost = 0.0
         for x, y in data:
             a = self.feed_forward(x)
@@ -284,10 +284,10 @@ class NeuralNetwork():
 
     def vectorized_result(self, j):
         """
-                Return a 10-dimensional unit vector with a 1.0 in the j'th position
-                and zeroes elsewhere.  This is used to convert a digit (0...9)
-                into a corresponding desired output from the neural network.
-                """
+        Return a 10-dimensional unit vector with a 1.0 in the j'th position
+        and zeroes elsewhere.  This is used to convert a digit (0...9)
+        into a corresponding desired output from the neural network.
+        """
         e = np.zeros((10, 1))
         e[j] = 1.0
         return e
