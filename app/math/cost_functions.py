@@ -15,7 +15,9 @@ class CrossEntropyCost:
                 returns nan. The np.nan_to_num ensures that that is converted
                 to the correct value (0.0).
                 """
-        return np.nan_to_num(np.sum(-y*np.log(a)-(1-y)*np.log(1-a)))
+        return np.nan_to_num(
+            np.sum(-y * np.log(a) - (1 - y) * np.log(1-a) )
+        )
 
     @staticmethod
     def delta(z, a, y):
